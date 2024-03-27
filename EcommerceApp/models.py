@@ -90,7 +90,7 @@ class OrderDetails(models.Model):
     
 class Payment(models.Model):
     paymentID = models.AutoField(primary_key=True)
-    orderID = orderID = models.ForeignKey(Order)
+    orderID = orderID = models.ForeignKey(Order, on_delete=models.CASCADE)
     paymentDate = models.DateTimeField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     PAYMENT_OPTIONS = (
@@ -114,7 +114,7 @@ class Payment(models.Model):
     
 class Shipping(models.Model):
     shippingID = models.AutoField(primary_key=True)
-    orderID = models.ForeignKey(Order)
+    orderID = models.ForeignKey(Order, on_delete=models.CASCADE)
     shipDate = models.DateTimeField()
     deliveryDate = models.DateTimeField()
     STATUS_OPTIONS = (
