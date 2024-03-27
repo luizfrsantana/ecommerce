@@ -1,0 +1,803 @@
+{
+	"info": {
+		"_postman_id": "194a33cc-229c-4d93-9cd1-0bcf498ca164",
+		"name": "Assessment#4 - Ecommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28075141"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Returns all customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/customer",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns customers with the same name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/customer?name=",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customer"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns customer by",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/customer/{CustomerID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customer",
+								"{CustomerID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/customer",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete customer by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/customer/{CustomerID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customer",
+								"{CustomerID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update customer informations by ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/customer/{CustomerID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customer",
+								"{CustomerID}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Returns all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/product",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns products by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/product?name={givenName}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"product"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{givenName}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns product by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/product/{ProductID} ",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"product",
+								"{ProductID} "
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns a list of products available",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/products/available",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"products",
+								"available"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/product",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete product by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/product/{ProductID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"product",
+								"{ProductID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product informations by ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/product/{ProductID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"product",
+								"{ProductID}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Returns all orders",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Returns all orders by OrderDate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/order?date={OrderDate}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"order"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "{OrderDate}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns order details by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/order/{OrderID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"order",
+								"{OrderID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns all OrderDetail in a Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/order/{OrderID}/itens",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"order",
+								"{OrderID}",
+								"itens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns details of a item in a order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/order/{OrderID}/item/{OrderDetailID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"order",
+								"{OrderID}",
+								"item",
+								"{OrderDetailID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/order",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a new item in a order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "/order/{OrderID}/item",
+							"path": [
+								"order",
+								"{OrderID}",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete order by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/order/{OrderID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"order",
+								"{OrderID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete item in a order by OrderDetails(OrderDetailID)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/order/{OrderID}/item/{OrderDetailID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"order",
+								"{OrderID}",
+								"item",
+								"{OrderDetailID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update item in a order by OrderDetails(OrderDetailID)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/order/{OrderID}/item/{OrderDetailID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"order",
+								"{OrderID}",
+								"item",
+								"{OrderDetailID}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Returns all category",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Returns categories by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/category?name={givenName}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"category"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{givenName}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns category by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/category/{CategoryID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"category",
+								"{CategoryID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/category",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete category by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/category/{CategoryID}{",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"category",
+								"{CategoryID}{"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update category informations by ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/category/{CategoryID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"category",
+								"{CategoryID}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Returns all payments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/payment",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns payments by Payment Method",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/payments?paymentmethod={PaymentMethod}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"payments"
+							],
+							"query": [
+								{
+									"key": "paymentmethod",
+									"value": "{PaymentMethod}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns payments by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/payment/{PaymentID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"payment",
+								"{PaymentID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/payment",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete payment by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/payment/{PaymentID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"payment",
+								"{PaymentID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update payment informations by ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/payment/{PaymentID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"payment",
+								"{PaymentID}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shipping",
+			"item": [
+				{
+					"name": "Returns all shippings",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Returns shipping by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/shipping/{ShippingID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"shipping",
+								"{ShippingID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns shippings status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/shipping?status={Status}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"shipping"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "{Status}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new shipping",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/shipping",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"shipping"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete shipping by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/shipping/{ShippingID}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"shipping",
+								"{ShippingID}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update shipping informations by ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}} /shipping/{ShippingID}",
+							"host": [
+								"{{BASE_URL}} "
+							],
+							"path": [
+								"shipping",
+								"{ShippingID}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://192.168.56.104:8000",
+			"type": "string"
+		}
+	]
+}
