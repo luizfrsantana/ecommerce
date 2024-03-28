@@ -210,7 +210,6 @@ def create_payment(data):
     amount = data.get('amount')
     paymentMethod = data.get('paymentMethod')
     
-    
     order = Order.objects.get(pk=orderID)
     
     new_payment = Payment(orderID=order, paymentDate=paymentDate, amount=amount, paymentMethod=paymentMethod)
@@ -290,10 +289,39 @@ def url_order_details_id_by_order_by_id(request, orderID, orderDetailID):
     order = Order.objects.get(orderID=orderID)
     orderDetails = OrderDetails.objects.get(orderID=order)
     return JsonResponse({"Order Details Solicited": orderDetails.serialize()}, status=200)
+
 def all_one_order_details(orderID):
     order = Order.objects.get(orderID=orderID)
     orderDetails = OrderDetails.objects.get(orderID=order)
     return JsonResponse({"Order Details Solicited": orderDetails.serialize()}, status=200)
+
+def create_order_details(data, orderID):
+    productID = data.get('productID')
+    quantity = data.get('quantity')
+    
+    order = Order.objects.get(orderID=orderID)
+    product = Product.objects.get(productID=productID)
+    
+    new_order_details = OrderDetails(orderID=order, productID=product, quantity=quantity)
+    new_order_details.save()
+    
+    return JsonResponse({"Order Details created": new_order_details.serialize()}, status=200)
+
+def update_order_details_by_id(orderDetailID, data):
+    order_details = OrderDetails.objects.get(orderDetailID=orderDetailID)
+    order_details.productID = data.get('productID')
+    order_details.quantity = data.get('quantity')
+    order_details.save()
+    return JsonResponse({"Order Details Updated": order_details.serialize()}, status=200)
+
+def delete_order_details_by_id(orderDetailID):
+    order_details = OrderDetails.objects.get(orderDetailID=orderDetailID)
+    order_details.delete()
+    return JsonResponse({"Order Details Deleted": "Success"}, status=200)
+
+def find_order_details_by_id(orderDetailID):
+    order_details = OrderDetails.objects.get(orderDetailID=orderDetailID)
+    return JsonResponse({"Order Details Solicited": order_details.serialize()}, status=200)
 
 ### SHIPPING ###
 def url_shipping(request):
