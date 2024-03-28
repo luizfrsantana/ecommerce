@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import json
-from .models import Customer, Category, Product, Payment, Order, Shipping
+from .models import Customer, Category, Product, Payment, Order, Shipping, OrderDetails
 
 # Create your views here.
  
@@ -186,7 +186,7 @@ def url_payment(request):
     elif request.method == 'GET':    
         return all_payments()
 
-def urls_payment_by_id(request, paymentID):
+def url_payment_by_id(request, paymentID):
     if request.method == 'DELETE':
         return delete_payment_by_id(paymentID)
         
@@ -237,20 +237,63 @@ def update_payment_by_id(paymentID, data):
 
 ### ORDER ###
 
-def order(request):
-    return JsonResponse({"order": "order_value"})
+def url_order(request):
+    if request.method == 'POST':
+       if 'application/json' in request.content_type: 
+            data = json.loads(request.body)
+            return create_order(data)       
+    elif request.method == 'GET':    
+        return all_orders()
 
-def order_by_id(request):
-    return JsonResponse({"order_by_id": "order_by_id_value"})
+def url_order_by_id(request, orderID):
+    if request.method == 'DELETE':
+        return delete_order_by_id(orderID)
+        
+    elif request.method == 'GET':
+        return find_order(orderID)
+
+def all_orders():
+    orders = Order.objects.all()
+    orders_data = []
+    for order in orders:
+        orders_data.append(order.serialize())
+    return JsonResponse(orders_data, safe=False, status=200)
+
+def create_order(data):
+    customerID = data.get('customerID')
+    customer = Customer.objects.get(pk=customerID)
+    
+    new_order = Shipping(customerID=customer)
+    new_order.save()
+    return JsonResponse({"Shipping created": new_order.serialize()}, status=200)
+
+def find_order(orderID):
+    order = Order.objects.get(orderID=orderID)
+    return JsonResponse({"Order Solicited": order.serialize()}, status=200)
+
+def delete_order_by_id(orderID):
+    order = Order.objects.get(orderID=orderID)
+    order.delete()
+    return JsonResponse({"Order deleted":"Success"}, status=200)
 
 ### ORDER DETAILS ###
 
-def order_details_by_order_by_id(request):
-    return JsonResponse({"order_details_by_order_by_id": "order_details_by_order_by_id_value"})
-
-def order_details_id_by_order_by_id(request):
-    return JsonResponse({"order_details_id_by_order_by_id": "order_details_id_by_order_by_id_value"})
-
+def url_order_details_by_order_by_id(request, orderID):
+    if request.method == 'POST':
+       if 'application/json' in request.content_type: 
+            data = json.loads(request.body)
+            return create_order_details(data,orderID)       
+    elif request.method == 'GET':    
+        return all_one_order_details(orderID)
+    
+def url_order_details_id_by_order_by_id(request, orderID, orderDetailID):
+    order = Order.objects.get(orderID=orderID)
+    orderDetails = OrderDetails.objects.get(orderID=order)
+    return JsonResponse({"Order Details Solicited": orderDetails.serialize()}, status=200)
+def all_one_order_details(orderID):
+    order = Order.objects.get(orderID=orderID)
+    orderDetails = OrderDetails.objects.get(orderID=order)
+    return JsonResponse({"Order Details Solicited": orderDetails.serialize()}, status=200)
 
 ### SHIPPING ###
 def url_shipping(request):
@@ -261,7 +304,7 @@ def url_shipping(request):
     elif request.method == 'GET':    
         return all_shippings()
 
-def urls_shipping_by_id(request, shippingID):
+def url_shipping_by_id(request, shippingID):
     if request.method == 'DELETE':
         return delete_shipping_by_id(shippingID)
         
@@ -285,7 +328,6 @@ def create_shipping(data):
     deliveryDate = data.get('deliveryDate')
     status = data.get('status')
     
-    # Assuming Order model is imported and 'orderID' is the foreign key field
     order = Order.objects.get(pk=orderID)
     
     new_shipping = Shipping(orderID=order, shipDate=shipDate, deliveryDate=deliveryDate, status=status)

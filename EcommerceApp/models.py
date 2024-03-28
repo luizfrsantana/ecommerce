@@ -59,7 +59,7 @@ class Product(models.Model):
 class Order(models.Model):
     orderID = models.AutoField(primary_key=True)
     customerID = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    OrderDate = models.DateTimeField()
+    OrderDate = models.DateTimeField(auto_now_add=True)
     
     def serialize(self):
         return {
