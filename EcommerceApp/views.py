@@ -15,8 +15,13 @@ def url_customer(request):
        if 'application/json' in request.content_type: 
             data = json.loads(request.body)
             return create_customer(data)       
-    elif request.method == 'GET':    
-        return all_customers()
+    elif request.method == 'GET':
+        page_number = request.GET.get('page_number')
+        page_size = request.GET.get('page_size')
+        if page_number and page_size:
+            return list_customers(page_number,page_size)
+        else:
+            return list_customers()
 
 def url_customer_by_id(request, customerID):
     if request.method == 'DELETE':
@@ -30,12 +35,21 @@ def url_customer_by_id(request, customerID):
         if 'application/json' in request.content_type: 
             return find_customer(customerID)
 
-def all_customers():
-    customers = Customer.objects.all()
+def list_customers(page_number=None, page_size=None ):
+    if (page_number or page_size) is None:
+        #return all customers
+        customers = Customer.objects.all()
+
+    else:
+        #return some customers
+        start = (int(page_number) - 1) * int(page_size)
+        end = start + int(page_size)
+        customers = Customer.objects.all() [start:end]
+        
     customers_data = []
     for customer in customers:
         customers_data.append(customer.serialize())
-    return JsonResponse(customers_data, safe=False, status=200)
+    return JsonResponse(customers_data, safe=False, status=200)        
 
 def create_customer(data):
     name = data.get('name')
