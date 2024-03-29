@@ -27,6 +27,23 @@
 					"response": []
 				},
 				{
+					"name": "Returns some customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/customer",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Returns customers with the same name",
 					"request": {
 						"method": "GET",
@@ -71,7 +88,22 @@
 					"name": "Create a new customer",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"john@example.com\",\r\n    \"phone\": \"+123456789\",\r\n    \"address\": \"123 Main St, City, Country\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{BASE_URL}}/customer",
 							"host": [
@@ -90,13 +122,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/customer/{CustomerID}",
+							"raw": "{{BASE_URL}}/customer/2",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"customer",
-								"{CustomerID}"
+								"2"
 							]
 						}
 					},
@@ -106,7 +138,22 @@
 					"name": "Update customer informations by ID",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"Luiz Felipe Rodrigues de SAntana\",\r\n        \"email\": \"luiz@example.com\",\r\n        \"address\": \"XXXXX\",\r\n        \"phone\": \"+999845745\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{BASE_URL}}/customer/{CustomerID}",
 							"host": [
@@ -127,6 +174,23 @@
 			"item": [
 				{
 					"name": "Returns all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/product",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns some products",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -241,14 +305,23 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"productID\": 1,\r\n        \"name\": \"Smartphone Iphone\",\r\n        \"price\": \"799.99\",\r\n        \"description\": \"A powerful smartphone with advanced features.\",\r\n        \"stock\": 100,\r\n        \"categoryID\": 2\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{BASE_URL}}/product/{ProductID}",
+							"raw": "{{BASE_URL}}/product/1",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"product",
-								"{ProductID}"
+								"1"
 							]
 						}
 					},
@@ -314,14 +387,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/order/{OrderID}/itens",
+							"raw": "{{BASE_URL}}/order/1/iten",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"order",
-								"{OrderID}",
-								"itens"
+								"1",
+								"iten"
 							]
 						}
 					},
@@ -351,7 +424,22 @@
 					"name": "Create a new order",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerID\": 1,\r\n    \"orderDetails\": [\r\n        {\r\n            \"productID\": 1,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"productID\": 3,\r\n            \"quantity\": 1\r\n        }\r\n    ],\r\n    \"shippingAddress\": \"Rua Principal, 123, Cidade Exemplo\",\r\n    \"paymentMethod\": \"Cartão de Crédito\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{BASE_URL}}/order",
 							"host": [
@@ -368,13 +456,31 @@
 					"name": "Add a new item in a order",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productID\": 1,\r\n    \"quantity\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "/order/{OrderID}/item",
+							"raw": "{{BASE_URL}}/order/1/iten",
+							"host": [
+								"{{BASE_URL}}"
+							],
 							"path": [
 								"order",
-								"{OrderID}",
-								"item"
+								"1",
+								"iten"
 							]
 						}
 					},
@@ -452,6 +558,14 @@
 					"response": []
 				},
 				{
+					"name": "Returns some category",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
 					"name": "Returns categories by name",
 					"request": {
 						"method": "GET",
@@ -496,14 +610,35 @@
 					"name": "Create a new category",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Electronics\",\r\n  \"description\": \"Category for electronic products.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{BASE_URL}}/category",
+							"raw": "{{BASE_URL}}/category?=",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"category"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -531,15 +666,30 @@
 					"name": "Update category informations by ID",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Updated Electronics\",\r\n  \"description\": \"Updated category for electronic products.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{BASE_URL}}/category/{CategoryID}",
+							"raw": "{{BASE_URL}}/category/1",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"category",
-								"{CategoryID}"
+								"1"
 							]
 						}
 					},
@@ -562,6 +712,33 @@
 							],
 							"path": [
 								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns same payments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/payment?page_number=1&page_size=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"payment"
+							],
+							"query": [
+								{
+									"key": "page_number",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -612,7 +789,22 @@
 					"name": "Create a new payment",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderID\": 1,\r\n    \"paymentDate\": \"2024-03-28T10:00:00\",\r\n    \"amount\": 100.50,\r\n    \"paymentMethod\": \"Credit Card\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{BASE_URL}}/payment",
 							"host": [
@@ -719,7 +911,22 @@
 					"name": "Create a new shipping",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderID\": 1,\r\n    \"shipDate\": \"2024-03-28T10:00:00\",\r\n    \"deliveryDate\": \"2024-04-04T10:00:00\",\r\n    \"status\": \"processing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{BASE_URL}}/shipping",
 							"host": [

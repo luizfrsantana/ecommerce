@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import json
+from .forms import UserForm
 from .models import Customer, Category, Product, Payment, Order, Shipping, OrderDetails
 
 # Create your views here.
@@ -10,18 +11,28 @@ def home(request):
 
 #### CUSTOMER ###
 
-def url_customer(request):
-    if request.method == 'POST':
-       if 'application/json' in request.content_type: 
-            data = json.loads(request.body)
-            return create_customer(data)       
-    elif request.method == 'GET':
-        page_number = request.GET.get('page_number')
-        page_size = request.GET.get('page_size')
-        if page_number and page_size:
-            return list_customers(page_number,page_size)
+def url_customer(request):    
+    if (request.method == 'GET'):
+        if ('application/json' in request.content_type):
+            page_number = request.GET.get('page_number')
+            page_size = request.GET.get('page_size')
+            if page_number and page_size:
+                return list_customers(page_number,page_size)
+            else:
+                return list_customers()
         else:
-            return list_customers()
+            form = UserForm()
+            return render(request, 'create_customer.html', {'form': form})  
+    elif request.method == 'POST':
+        if 'application/json' in request.content_type:
+            data = json.loads(request.body)
+            return create_customer(data) 
+        else:
+            form = UserForm(request.POST)
+            print(f'{form.is_valid()} {form.cleaned_data}')
+            data = form.cleaned_data
+            create_customer(data)
+            return render(request, 'customer_created.html', {'name': data['name']}) 
 
 def url_customer_by_id(request, customerID):
     if request.method == 'DELETE':
@@ -267,7 +278,6 @@ def create_payment(data):
     order = Order.objects.get(pk=orderID)
     
     new_payment = Payment(orderID=order, paymentDate=paymentDate, amount=amount, paymentMethod=paymentMethod)
-    breakpoint()
     new_payment.save()
     return JsonResponse({"Payment created": new_payment.serialize()}, status=200)
 

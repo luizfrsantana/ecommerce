@@ -6,7 +6,8 @@ urlpatterns = [
     path('', views.home),
 
     #Customer Paths
-    path('customer', views.url_customer), 
+    #path('create-customer/', views.create_customer_view, name='create_customer'),
+    path('customer/', views.url_customer), 
     path('customer/<int:customerID>', views.url_customer_by_id),
 
     #Customer Paths
@@ -28,6 +29,6 @@ urlpatterns = [
     path('payment/<int:paymentID>', views.url_payment_by_id),
     
     #Shipping Paths
-    path('shipping', views.url_payment),
+    path('shipping', views.url_shipping),
     path('shipping/<int:shippingID>', views.url_shipping_by_id),
 ]
