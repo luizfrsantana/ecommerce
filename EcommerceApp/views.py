@@ -86,7 +86,12 @@ def url_product(request):
             data = json.loads(request.body)
             return create_product(data)       
     elif request.method == 'GET':    
-        return all_products()
+        page_number = request.GET.get('page_number')
+        page_size = request.GET.get('page_size')
+        if page_number and page_size:
+            return list_products(page_number, page_size)
+        else:
+            return list_products()
 
 def url_product_by_id(request, productID):
     if request.method == 'DELETE':
@@ -100,8 +105,16 @@ def url_product_by_id(request, productID):
     elif request.method == 'GET':
         return find_product(productID)
 
-def all_products():
-    products = Product.objects.all()
+def list_products(page_number=None, page_size=None):
+    if (page_number or page_size) is None:
+        #return all products
+        products = Product.objects.all()
+    else:
+        #return some products
+        start = (int(page_number) - 1) * int(page_size)
+        end = start + int(page_size)
+        products = Product.objects.all()[start:end]
+        
     products_data = []
     for product in products:
         products_data.append(product.serialize())
@@ -146,8 +159,13 @@ def url_category(request):
        if 'application/json' in request.content_type: 
             data = json.loads(request.body)
             return create_category(data)       
-    elif request.method == 'GET':    
-        return all_categories()
+    elif request.method == 'GET':
+        page_number = request.GET.get('page_number')
+        page_size = request.GET.get('page_size')
+        if page_number and page_size:
+            return list_categories(page_number, page_size)
+        else:
+            return list_categories()
 
 def url_category_by_id(request, categoryID):
     if request.method == 'DELETE':
@@ -160,8 +178,17 @@ def url_category_by_id(request, categoryID):
     elif request.method == 'GET':
         return find_category(categoryID)
 
-def all_categories():
-    categories = Category.objects.all()
+def list_categories(page_number=None, page_size=None):
+    if (page_number or page_size) is None:
+        #return all categories
+        categories = Category.objects.all()
+
+    else:
+        #return some categories
+        start = (int(page_number) - 1) * int(page_size)
+        end = start + int(page_size)
+        categories = Category.objects.all()[start:end]
+        
     categories_data = []
     for category in categories:
         categories_data.append(category.serialize())
@@ -198,7 +225,12 @@ def url_payment(request):
             data = json.loads(request.body)
             return create_payment(data)       
     elif request.method == 'GET':    
-        return all_payments()
+        page_number = request.GET.get('page_number')
+        page_size = request.GET.get('page_size')
+        if page_number and page_size:
+            return list_payments(page_number, page_size)
+        else:
+            return list_payments()
 
 def url_payment_by_id(request, paymentID):
     if request.method == 'DELETE':
@@ -211,8 +243,16 @@ def url_payment_by_id(request, paymentID):
     elif request.method == 'GET':
         return find_payment(paymentID)
 
-def all_payments():
-    payments = Payment.objects.all()
+def list_payments(page_number=None, page_size=None):
+    if (page_number or page_size) is None:
+        #return all payments
+        payments = Payment.objects.all()
+    else:
+        #return some payments
+        start = (int(page_number) - 1) * int(page_size)
+        end = start + int(page_size)
+        payments = Payment.objects.all()[start:end]
+        
     payments_data = []
     for payment in payments:
         payments_data.append(payment.serialize())
@@ -227,6 +267,7 @@ def create_payment(data):
     order = Order.objects.get(pk=orderID)
     
     new_payment = Payment(orderID=order, paymentDate=paymentDate, amount=amount, paymentMethod=paymentMethod)
+    breakpoint()
     new_payment.save()
     return JsonResponse({"Payment created": new_payment.serialize()}, status=200)
 
@@ -256,7 +297,12 @@ def url_order(request):
             data = json.loads(request.body)
             return create_order(data)       
     elif request.method == 'GET':    
-        return all_orders()
+        page_number = request.GET.get('page_number')
+        page_size = request.GET.get('page_size')
+        if page_number and page_size:
+            return list_orders(page_number, page_size)
+        else:
+            return list_orders()
 
 def url_order_by_id(request, orderID):
     if request.method == 'DELETE':
@@ -265,8 +311,16 @@ def url_order_by_id(request, orderID):
     elif request.method == 'GET':
         return find_order(orderID)
 
-def all_orders():
-    orders = Order.objects.all()
+def list_orders(page_number=None, page_size=None):
+    if (page_number or page_size) is None:
+        #return all orders
+        orders = Order.objects.all()
+    else:
+        #return some orders
+        start = (int(page_number) - 1) * int(page_size)
+        end = start + int(page_size)
+        orders = Order.objects.all()[start:end]
+        
     orders_data = []
     for order in orders:
         orders_data.append(order.serialize())
@@ -276,7 +330,7 @@ def create_order(data):
     customerID = data.get('customerID')
     customer = Customer.objects.get(pk=customerID)
     
-    new_order = Shipping(customerID=customer)
+    new_order = Order(customerID=customer)
     new_order.save()
     return JsonResponse({"Shipping created": new_order.serialize()}, status=200)
 
@@ -295,19 +349,37 @@ def url_order_details_by_order_by_id(request, orderID):
     if request.method == 'POST':
        if 'application/json' in request.content_type: 
             data = json.loads(request.body)
-            return create_order_details(data,orderID)       
+            return create_order_details(data, orderID)       
     elif request.method == 'GET':    
-        return all_one_order_details(orderID)
+        page_number = request.GET.get('page_number')
+        page_size = request.GET.get('page_size')
+        if page_number and page_size:
+            return list_order_details_by_order(page_number, page_size, orderID)
+        else:
+            return list_order_details_by_order(None, None, orderID)
     
 def url_order_details_id_by_order_by_id(request, orderID, orderDetailID):
     order = Order.objects.get(orderID=orderID)
-    orderDetails = OrderDetails.objects.get(orderID=order)
+    orderDetails = OrderDetails.objects.get(orderDetailID=orderDetailID)
     return JsonResponse({"Order Details Solicited": orderDetails.serialize()}, status=200)
 
-def all_one_order_details(orderID):
+def list_order_details_by_order(page_number=None, page_size=None, orderID=None):
     order = Order.objects.get(orderID=orderID)
-    orderDetails = OrderDetails.objects.get(orderID=order)
-    return JsonResponse({"Order Details Solicited": orderDetails.serialize()}, status=200)
+    order_details = OrderDetails.objects.filter(orderID=order)
+
+    if (page_number or page_size) is None:
+        #return all order details
+        order_details = order_details.all()
+    else:
+        #return some order details
+        start = (int(page_number) - 1) * int(page_size)
+        end = start + int(page_size)
+        order_details = order_details[start:end]
+        
+    order_details_data = []
+    for order_detail in order_details:
+        order_details_data.append(order_detail.serialize())
+    return JsonResponse(order_details_data, safe=False, status=200)
 
 def create_order_details(data, orderID):
     productID = data.get('productID')
@@ -344,7 +416,12 @@ def url_shipping(request):
             data = json.loads(request.body)
             return create_shipping(data)       
     elif request.method == 'GET':    
-        return all_shippings()
+        page_number = request.GET.get('page_number')
+        page_size = request.GET.get('page_size')
+        if page_number and page_size:
+            return list_shippings(page_number, page_size)
+        else:
+            return list_shippings()
 
 def url_shipping_by_id(request, shippingID):
     if request.method == 'DELETE':
@@ -357,8 +434,16 @@ def url_shipping_by_id(request, shippingID):
     elif request.method == 'GET':
         return find_shipping(shippingID)
 
-def all_shippings():
-    shippings = Shipping.objects.all()
+def list_shippings(page_number=None, page_size=None):
+    if (page_number or page_size) is None:
+        #return all shippings
+        shippings = Shipping.objects.all()
+    else:
+        #return some shippings
+        start = (int(page_number) - 1) * int(page_size)
+        end = start + int(page_size)
+        shippings = Shipping.objects.all()[start:end]
+        
     shippings_data = []
     for shipping in shippings:
         shippings_data.append(shipping.serialize())
