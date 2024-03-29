@@ -1,0 +1,21 @@
+<!-- customer_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer List</title>
+</head>
+<body>
+    <h1>Customer List</h1>
+    <ul>
+        {% for customer in customers %}
+        <li>{{ customer.name }} - {{ customer.email }} - {{ customer.phone }} - {{ customer.address }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Create Customer</h2>
+    <form method="post">
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+    </form>
+</body>
+</html>

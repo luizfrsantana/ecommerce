@@ -13,16 +13,24 @@ def home(request):
 
 def url_customer(request):    
     if (request.method == 'GET'):
+        page_number = request.GET.get('page_number')
+        page_size = request.GET.get('page_size')
         if ('application/json' in request.content_type):
-            page_number = request.GET.get('page_number')
-            page_size = request.GET.get('page_size')
             if page_number and page_size:
                 return list_customers(page_number,page_size)
             else:
                 return list_customers()
         else:
+            #http://192.168.56.104:8000/customer/?page_number=1&page_size=3
+            if page_number and page_size:
+                customerJson = list_customers(page_number,page_size).content
+            else:
+                customerJson = list_customers().content    
             form = UserForm()
-            return render(request, 'create_customer.html', {'form': form})  
+            customer_str = customerJson.decode('utf-8')
+            customersDictionary = json.loads(customer_str)
+            return render(request, 'customer.html', {'form': form, 'customers': customersDictionary})
+ 
     elif request.method == 'POST':
         if 'application/json' in request.content_type:
             data = json.loads(request.body)
